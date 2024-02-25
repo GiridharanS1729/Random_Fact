@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Engineering Facts</title>
+    <link rel="icon" href="./icon.png">
+    <style>
+        body {
+            background: repeating-conic-gradient(red 33%, green 66%, blue 99%);
+            backdrop-filter: blur(100px);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding-top: 50px;
+            position: relative;
+        }
+
+        #factButton {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #ff0000;
+            color: #fff3a2;
+            border: 10px ridge #f00;
+            border-radius: 5px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        #factDisplay {
+            font-size: 58px;
+            background-color: #fff5;
+            border: 5px groove #f8b;
+            border-radius: 20px;
+            height: 0px;
+            width: 0px;
+            display: none;
+            margin: auto;
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <button id="factButton">Generate Random Fact</button>
+        <div id="factDisplay"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let f = document.getElementById("factDisplay");
+            $('#factButton').click(function () {
+                var limit = 1;
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://api.api-ninjas.com/v1/facts?limit=' + limit,
+                    headers: { 'X-Api-Key': 'PDtki2Xtyf7u/CsRtd8UeQ==eol9tcqdxjdDHCmr' },
+                    contentType: 'application/json',
+                    success: function (result) {
+                        var facts = result[0].fact + ".";
+                        f.style.display = "block";
+                        f.style.width = "fit-content";
+                        f.style.height = "fit-content";
+                        $('#factDisplay').text(facts);
+                    },
+                    error: function ajaxError(jqXHR) {
+                        alert('Error: ' + jqXHR.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
